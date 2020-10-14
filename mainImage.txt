@@ -1,4 +1,6 @@
 // GLSL STARTER CODE BY DANIEL S. BUCKSTEIN
+// Modified by Eli to create a bloom effect.
+// Citations: https://www.shadertoy.com/view/XdVczz
 //  -> IMAGE TAB (final)
 
 //------------------------------------------------------------
@@ -18,5 +20,7 @@ void mainImage(out color4 fragColor, in sCoord fragCoord)
     fragColor = texture(iChannel0, uv);
     
     //TEST
-    if (fract(fragCoord.y) == 0.5)
-        fragColor = vec4(1.0);
+    //if (fract(fragCoord.y) == 0.5)
+        //fragColor = vec4(1.0);
+    
+}

@@ -1,4 +1,15 @@
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    fragColor = vec4(0.0,0.0,1.0,1.0);
+    // Gaussian values
+	vec2 uv = fragCoord;
+    
+    //The BrightPass starts the entire image darkened.
+    vec3 blur = vec3(0.0);
+    
+    //Color is added to aspects that exceed certain light values. The brightest of pixels will recieve the biggest effect.
+    blur += 0.129001*texture( iChannel0, (uv+vec2(-5.5, 0.0))/iResolution.xy).xyz;
+    
+    
+    
+    fragColor = vec4(blur, 1.0);
 }
