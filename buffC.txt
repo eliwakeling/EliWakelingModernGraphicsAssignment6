@@ -7,17 +7,19 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Gaussian values
 	vec2 uv = fragCoord;
     
+    vec2 res = iResolution.xy;
+    
     //The BrightPass starts the entire image darkened.
     vec3 bright = vec3(0.0);
     
-    //Blur effect is added to the image, determined by the luminessence of the pixel effected.
-    bright += 0.1029001*texture( iChannel0, (uv+vec2(-5.5, 0.0))/iResolution.xy).xyz;
-    bright += 0.142521*texture( iChannel0, (uv+vec2(-3.5, 0.0))/iResolution.xy).xyz;
-    bright += 0.151303*texture( iChannel0, (uv+vec2(-1.5, 0.0))/iResolution.xy).xyz;
-    bright += 0.15435*texture( iChannel0, (uv+vec2(0.0, 0.0))/iResolution.xy).xyz;
-    bright += 0.151303*texture( iChannel0, (uv+vec2(1.5, 0.0))/iResolution.xy).xyz;
-    bright += 0.142521*texture( iChannel0, (uv+vec2(3.5, 0.0))/iResolution.xy).xyz;
-    bright += 0.129001*texture( iChannel0, (uv+vec2(5.5, 0.0))/iResolution.xy).xyz;
+    //Color is added to aspects that exceed certain light values. The brightest of pixels will recieve the biggest effect.
+    bright += 0.1029001*texture( iChannel0, (uv+vec2(-5.5, 0.0))/res).xyz;
+    bright += 0.142521*texture( iChannel0, (uv+vec2(-3.5, 0.0))/res).xyz;
+    bright += 0.151303*texture( iChannel0, (uv+vec2(-1.5, 0.0))/res).xyz;
+    bright += 0.15435*texture( iChannel0, (uv+vec2(0.0, 0.0))/res).xyz;
+    bright += 0.151303*texture( iChannel0, (uv+vec2(1.5, 0.0))/res).xyz;
+    bright += 0.142521*texture( iChannel0, (uv+vec2(3.5, 0.0))/res).xyz;
+    bright += 0.129001*texture( iChannel0, (uv+vec2(5.5, 0.0))/res).xyz;
     
 
     

@@ -17,13 +17,22 @@ void mainImage(out color4 fragColor, in sCoord fragCoord)
     
     vec4 bloom = texture(iChannel2, uv);
     
+    vec4 img = texture(iChannel0, uv);
+    
     // TESTING
     // set iChannel0 to 'Misc/Buffer A' and fetch sample
-    //fragColor = bloom + texture(iChannel0, uv);
     
+    //Addition
+    //fragColor = bloom + img, uv);
     
     //Mix creates a mixture of the gaussean effect and the original image, the float determines how far between the "ingredients" the final mixture is.
-   fragColor = mix(bloom, texture(iChannel0, uv), 0.9);
+    fragColor = mix(bloom, img, 0.9);
+    
+    //Screen inverts the values of the affected pixels, multiplies them, then inverts them back.
+    //vec4 screen = 1.0 -(1.0 - bloom)*(1.0 - img);
+    
+    //fragColor = screen;
+    
     
     //TEST
     //if (fract(fragCoord.y) == 0.5)
