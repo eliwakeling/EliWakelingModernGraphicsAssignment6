@@ -1,4 +1,8 @@
 // GLSL STARTER CODE BY DANIEL S. BUCKSTEIN
+// Modified by Eli to create a bloom effect.
+// Citations: https://www.shadertoy.com/view/XdVczz
+
+// GLSL STARTER CODE BY DANIEL S. BUCKSTEIN
 //  -> BUFFER A TAB (scene)
 
 //------------------------------------------------------------
@@ -24,12 +28,12 @@ color4 calcColor(in sViewport vp, in sRay ray)
     //return color4(vp.ndc, 0.0, 0.0);
     //return asPoint(sBasis(vp.viewportPoint.xy, -vp.viewportPoint.z));
     
-        sCoord px = vp.pixelCoord;
-        sDCoord res = iChannelResolution[0].xy;
-        sScalar ratio = res.y * vp.resolutionInv.y;
-    
     
         ////CUBEMAP samplerCube:
+    //Initiating Cubemap Resolutions.
+    sCoord px = vp.pixelCoord;
+    sDCoord res = iChannelResolution[0].xy;
+    sScalar ratio = res.y * vp.resolutionInv.y;
     
     //Initialize the cube map.
     vec3 cubeLoc = ray.direction.xyz;
@@ -58,6 +62,10 @@ void mainImage(out color4 fragColor, in sCoord fragCoord)
     
     // viewport info
     sViewport vp;
+    
+
+    
+
 
     // ray
     sRay ray;
@@ -65,5 +73,12 @@ void mainImage(out color4 fragColor, in sCoord fragCoord)
     // render
     initViewport(vp, viewportHeight, focalLength, fragCoord, iResolution.xy);
     initRayPersp(ray, eyePosition, vp.viewportPoint.xyz);
-    fragColor += calcColor(vp, ray);
+    
+    //Define the Cubemap
+    vec4 col = calcColor(vp, ray);
+    
+
+        
+    //Return the cubemap texture.
+    fragColor += col;
 }

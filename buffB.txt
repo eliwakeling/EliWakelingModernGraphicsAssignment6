@@ -1,15 +1,24 @@
+// GLSL STARTER CODE BY DANIEL S. BUCKSTEIN
+// Modified by Eli to create a bloom effect.
+// Citations: https://www.shadertoy.com/view/XdVczz
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    // Gaussian values
-	vec2 uv = fragCoord;
+    vec2 uv = fragCoord.xy / iResolution.xy;
     
-    //The BrightPass starts the entire image darkened.
-    vec3 blur = vec3(0.0);
+    vec4 col = texture(iChannel0, uv);
     
-    //Color is added to aspects that exceed certain light values. The brightest of pixels will recieve the biggest effect.
-    blur += 0.129001*texture( iChannel0, (uv+vec2(-5.5, 0.0))/iResolution.xy).xyz;
-    
+    //Calculate Pixel Lumincence. The different light values of each color contribute to the liminance in a different way.
+    float pixLum = 0.299*col.x + 0.587*col.y + 0.114*col.z;
+    float lumLimit = 0.7;
     
     
-    fragColor = vec4(blur, 1.0);
+    //If the bright Pass doesn't exceed a certain limit, then it isn't right enough to render.
+    if(pixLum < lumLimit){
+    	col = vec4(0.0,0.0,0.0,0.0);
+    }
+    
+    
+    
+    fragColor += col;
 }

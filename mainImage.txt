@@ -15,9 +15,15 @@ void mainImage(out color4 fragColor, in sCoord fragCoord)
     // test UV for input image
     sCoord uv = fragCoord / iChannelResolution[0].xy;
     
+    vec4 bloom = texture(iChannel2, uv);
+    
     // TESTING
     // set iChannel0 to 'Misc/Buffer A' and fetch sample
-    fragColor = texture(iChannel0, uv);
+    //fragColor = bloom + texture(iChannel0, uv);
+    
+    
+    //Mix creates a mixture of the gaussean effect and the original image, the float determines how far between the "ingredients" the final mixture is.
+   fragColor = mix(bloom, texture(iChannel0, uv), 0.9);
     
     //TEST
     //if (fract(fragCoord.y) == 0.5)
